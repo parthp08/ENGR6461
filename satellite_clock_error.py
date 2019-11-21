@@ -12,7 +12,7 @@ import numpy as np
 
 """
 
-def sat_clock_error(eph_data, t_rcv):
+def sat_clock_error(eph_data, t_rcv, tau):
     """
     Estimate satellite clock bias
 
@@ -30,7 +30,7 @@ def sat_clock_error(eph_data, t_rcv):
 
     # inividual satellite time corrected to GPS system time 't'
     # trasmission time  # Ref [2] page 1
-    tau = 0.075 # initial estimation    # tau = t_rcv - t_tr
+    # tau = 0.075 # initial estimation    # tau = t_rcv - t_tr
     t_tr = t_rcv - tau # t == t_tr
 
     t_k = t_tr - t_0e  # time from ephemeris reference time(t_0e)

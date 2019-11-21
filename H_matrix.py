@@ -13,7 +13,7 @@ def H_matrix(e):
     
     return H
 
-def H_terms(H):
+def H_terms_sol(H):
     """
     returns (H^T H)^-1 H^T
     """

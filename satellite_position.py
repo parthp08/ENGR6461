@@ -1,6 +1,6 @@
 import numpy as np
 
-def sat_pos(eph_data, t_rcv):
+def sat_pos(eph_data, t_rcv, tau):
     """
     Calculate the Position of Satellite in ECEF frame given the ephemeris data of the satellite
     and GPS receiving time of the week
@@ -9,6 +9,7 @@ def sat_pos(eph_data, t_rcv):
     -------
     eph_data : np.array, shape(21,), ephemeris data for a satellite
     t_rcv : float, receiving GPS time of the week, seconds
+    tau: float, transmission time between sat and user, seconds
 
     Returns
     --------
@@ -22,6 +23,7 @@ def sat_pos(eph_data, t_rcv):
          Spilker, Axelrad, Enge; AIAA; 1996
     [4] 'Aerospace Navigation Systems'; edited by A.V.Nebylv, J.Watson
     [5] https://ascelibrary.org/doi/pdf/10.1061/9780784411506.ap03
+    [6] GNSS Applications and Methods; Scott Gleason, Demoz Gebre-Egzibher
     
     """
 
@@ -37,7 +39,7 @@ def sat_pos(eph_data, t_rcv):
     
     n0 = np.sqrt(mu / a**3) # computed mean motion # rad/sec
     
-    tau = 0.075
+    #tau = 0.075
     t = t_rcv - tau # t == t_tr
 
     t_k = t - t_0e  # time from ephemeris reference time(t_0e)
@@ -94,7 +96,13 @@ def sat_pos(eph_data, t_rcv):
     y_k = x_k_dash*np.sin(omg_k) + y_k_dash*np.cos(i_k)*np.cos(omg_k)
     z_k = y_k_dash*np.sin(i_k)
 
-    return x_k, y_k, z_k
+    # correction for earth rotation # Ref [6] page 61
+    # by rotating position of sat(x_k,y_k,z_k) by small amount to obtain correct value of sat position
+    x_k_n = np.cos(omg_e_dot*tau)*x_k + np.sin(omg_e_dot*tau)*y_k
+    y_k_n = -np.sin(omg_e_dot*tau)*x_k + np.cos(omg_e_dot*tau)*y_k
+    z_k_n = z_k
+
+    return x_k_n, y_k_n, z_k_n
 
 
 ## Tests
@@ -116,5 +124,7 @@ if __name__ == "__main__":
     t_rcv = iono[0]
     print(t_rcv)
 
-    print(sat_pos(eph_sat1, t_rcv))
+    tau = 0.075 # initial estimation
+
+    print(sat_pos(eph_sat1, t_rcv, tau))
 

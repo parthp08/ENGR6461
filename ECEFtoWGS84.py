@@ -23,7 +23,8 @@ def ECEFtoWGS84(x,y,z):
         else: # z < 0
             phi = -pi/2
             h = -z - b
-        return "Longitude cannot be defined", phi, h
+        # return "Longitude cannot be defined", phi, h
+        return 0, phi, h
 
     ### Step 2
     # assuming x**2 + y**2 > 0
@@ -90,4 +91,5 @@ if __name__ == "__main__":
     print(ECEFtoWGS84(0.00, 250.00, 10100.42)) # 90, 89.729935, -6346553.97
     # print(ECEFtoWGS84(1.00, 0.00, .00)) # 0.000000, 0.000000, -6378136.00
     print(ECEFtoWGS84(1.02, 0.00, 30446.61)) # 0.0,89.999203, -6326305.63
+    print(ECEFtoWGS84(0, 0, 0))
 
