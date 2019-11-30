@@ -1,3 +1,25 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Compute Azimuth and Elevation of satellite from the user local tangnent
+%%% plane.
+%
+%%% references
+% -------------
+%[1] 'Global Positioning System: Theory and Applications'; edited by 
+%     Parkinson, Spilker, Axelrad, Enge; AIAA; 1996
+%[2] 'Aerospace Navigation Systems'; edited by A.V.Nebylv, J.Watson
+%
+%%% inputs
+% ----------
+% P_sat : array, size(3,1), satellite position in ECEF frame, meters
+% P_u : array, size(3,1), user position in ECEF frame, meters
+%
+%%% outputs
+%-----------
+% az : float, azimuth of satellite from the user local tangent plane, rad
+% el : float, elevation of satellite from the user local tangent plane, rad
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 function [az, el] = sat_az_el(P_sat,P_u)
     
     xs = P_sat(1);
@@ -8,7 +30,7 @@ function [az, el] = sat_az_el(P_sat,P_u)
     yu = P_u(2);
     zu = P_u(3);
     
-	[lat, lon, h] = ECEF2WGS(P_u, 0);
+	[lat, lon, ~] = ECEF2WGS(P_u, 0);
     
     % vector from user to sat
     X = [xs-xu; ys-yu; zs-zu];

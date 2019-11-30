@@ -1,3 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Compute the tropospheric errors in pseudorange mesurement
+%
+%%% references
+% -------------
+%[1] https://moodle.concordia.ca/moodle/pluginfile.php/3799910/mod_resource/content/1/Project_Appendix.pdf
+%[2] 'Aerospace Navigation Systems'; edited by A.V.Nebylv, J.Watson
+%
+%%% inputs
+% ----------
+% T_amb : float, ambient air tempreature, deg celsius 
+% P_amb : float, ambient air pressure, kPa 
+% P_vap : float, ambient vapour pressure, kPa
+% E_s : float, elevation of sat from the user local tangent plane, rad
+%
+%%% outputs
+%-----------
+% T_e : float, tropospheric delay, meters
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 function T_e = tropo_error(T_amb, P_amb, P_vap, E_s)
 
     % zenith delay of the dry component

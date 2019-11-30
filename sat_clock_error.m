@@ -1,5 +1,29 @@
-function delta_t_sv = sat_clock_error(eph_data, t_rcv, tau)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Compute satellite clock correction
+%
+%%% references
+% -------------
+%[1] https://moodle.concordia.ca/moodle/pluginfile.php/3799910/mod_resource/content/1/Project_Appendix.pdf
+%[2] https://moodle.concordia.ca/moodle/pluginfile.php/3799909/mod_resource/content/1/ENGR6461_project.pdf
+%[3] 'Global Positioning System: Theory and Applications'; edited by 
+%     Parkinson, Spilker, Axelrad, Enge; AIAA; 1996
+%[4] 'Aerospace Navigation Systems'; edited by A.V.Nebylv, J.Watson
+%[5] https://ascelibrary.org/doi/pdf/10.1061/9780784411506.ap03
+%
+%%% inputs
+% ----------
+% eph_data : array, size(21,1), ephemeris data received from the GPS
+%            satellites
+% t_rcv : flot, float, receiving GPS time of the week, seconds
+% tau : float, transmission time between sat and user, seconds
+%
+%%% outputs
+%-----------
+% delta_t_sv : float, satellite clock correction, seconds
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+function delta_t_sv = sat_clock_error(eph_data, t_rcv, tau)
 
     % eph parameters (Ref [2], page 2)
     %cr_sin = eph_data(1);

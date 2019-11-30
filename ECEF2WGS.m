@@ -1,3 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Converts vector ocordinates from ECEF frame to WGS84 frame
+%
+%%% references
+% -------------
+%[1] 'Aerospace Navigation Systems'; edited by A.V.Nebylv, J.Watson
+%
+%%% inputs
+% ----------
+% P : array, size(3,1), vector in ECEF Frame, meters
+% deg : int, deg=1 for units in deg
+%            deg=0 for units in rad
+%
+%%% outputs
+%-----------
+% phi : float, latitide, deg or rad
+% lambda : float, longitude, deg or rad
+% h : altitude, meters
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 function [phi, lambda, h] = ECEF2WGS(P, deg)
  
     x = P(1);

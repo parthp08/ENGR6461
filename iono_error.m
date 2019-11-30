@@ -1,3 +1,29 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Compute the ionospheric errors in pseudorange mesurement
+%
+%%% references
+% -------------
+%[1] https://moodle.concordia.ca/moodle/pluginfile.php/3799910/mod_resource/content/1/Project_Appendix.pdf
+%[2] https://moodle.concordia.ca/moodle/pluginfile.php/3799909/mod_resource/content/1/ENGR6461_project.pdf
+%[3] 'Global Positioning System: Theory and Applications'; edited by 
+%     Parkinson, Spilker, Axelrad, Enge; AIAA; 1996
+%[4] 'Aerospace Navigation Systems'; edited by A.V.Nebylv, J.Watson
+%
+%%% inputs
+% ----------
+% iono_data : array, size(9,1), data with GPS time for measurement and 
+%             eight parameters for ionosphere delay estimation
+% lat_u : float, latitude of user, rad
+% lon_u : float, longitude of user, rad
+% E_s : float, elevation of sat from the user local tangent plane, rad
+% A_s : float, azimuth of sat from the user local tangent plane, rad
+%
+%%% outputs
+%-----------
+% I_e : float, ionospheric delay, meters
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 function I_e = iono_error(iono_data, lat_u, lon_u, E_s, A_s)
 
     pi = 3.1415926535898;    % GPS standard value for pi

@@ -1,28 +1,32 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%Calculate the Position of Satellite in ECEF frame given the ephemeris 
+%%% data of the satellite and GPS receiving time of the week
+%
+%%% references
+% -------------
+%[1] https://moodle.concordia.ca/moodle/pluginfile.php/3799910/mod_resource/content/1/Project_Appendix.pdf
+%[2] https://moodle.concordia.ca/moodle/pluginfile.php/3799909/mod_resource/content/1/ENGR6461_project.pdf
+%[3] 'Global Positioning System: Theory and Applications'; edited by 
+%     Parkinson, Spilker, Axelrad, Enge; AIAA; 1996
+%[4] 'Aerospace Navigation Systems'; edited by A.V.Nebylv, J.Watson
+%[5] https://ascelibrary.org/doi/pdf/10.1061/9780784411506.ap03
+%[6] GNSS Applications and Methods; Scott Gleason, Demoz Gebre-Egzibher
+%
+%%% inputs
+% ---------
+% eph_data : array, shape(21,1), ephemeris data for a satellite
+% t_rcv : float, receiving GPS time of the week, seconds
+% tau: float, transmission time between sat and user, seconds
+%
+%%% outputs
+% ----------
+%P = [x; y; z] : array, size(3,1), Position of Satellte in ECEF frame, 
+%                meters
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 function P = sat_position(eph_data, t_rcv, tau)
-
-    %Calculate the Position of Satellite in ECEF frame given the ephemeris data of the satellite
-    %and GPS receiving time of the week
-
-    %Inputs
-    %-------
-    %eph_data : array, shape(21,1), ephemeris data for a satellite
-    %t_rcv : float, receiving GPS time of the week, seconds
-    %tau: float, transmission time between sat and user, seconds
-
-    %Returns
-    %--------
-    %P = [x; y; z] : array, floats, Position of Satellte in ECEF frame, in meters
-    
-    %References
-    %-----------
-    %[1] https://moodle.concordia.ca/moodle/pluginfile.php/3799910/mod_resource/content/1/Project_Appendix.pdf
-    %[2] https://moodle.concordia.ca/moodle/pluginfile.php/3799909/mod_resource/content/1/ENGR6461_project.pdf
-    %[3] 'Global Positioning System: Theory and Applications'; edited by Parkinson, 
-    %     Spilker, Axelrad, Enge; AIAA; 1996
-    %[4] 'Aerospace Navigation Systems'; edited by A.V.Nebylv, J.Watson
-    %[5] https://ascelibrary.org/doi/pdf/10.1061/9780784411506.ap03
-    %[6] GNSS Applications and Methods; Scott Gleason, Demoz Gebre-Egzibher
-    
+ 
     pi = 3.1415926535898;    % GPS standard value for pi
     
     % eph parameters (Ref [2], page 2)
