@@ -10,21 +10,23 @@
 %
 %%% inputs
 % ----------
-% P_sat : array, size(3,1), satellite position in ECEF frame, meters
+% P_sat : array, size(3,*), satellite position in ECEF frame, meters
 % P_u : array, size(3,1), user position in ECEF frame, meters
 %
 %%% outputs
 %-----------
-% az : float, azimuth of satellite from the user local tangent plane, rad
-% el : float, elevation of satellite from the user local tangent plane, rad
+% az : array, size(1,*), float, azimuth of satellite from the user 
+%      local tangent plane, rad
+% el : array, size(1,*), float, elevation of satellite from the user 
+%      local tangent plane, rad
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [az, el] = sat_az_el(P_sat,P_u)
     
-    xs = P_sat(1);
-    ys = P_sat(2);
-    zs = P_sat(3);
+    xs = P_sat(1,:);
+    ys = P_sat(2,:);
+    zs = P_sat(3,:);
     
     xu = P_u(1);
     yu = P_u(2);
@@ -48,12 +50,12 @@ function [az, el] = sat_az_el(P_sat,P_u)
 
     % X_L % representation of X in ENU
     X_L = R_L*X;
-    x_e = X_L(1); % east position
-    x_n = X_L(2); % north position
-    x_u = X_L(3); % up position
+    x_e = X_L(1,:); % east position
+    x_n = X_L(2,:); % north position
+    x_u = X_L(3,:); % up position
 
     az = atan2(x_e, x_n);
 
-    el = asin(x_u / sqrt(x_e^2 + x_n^2 + x_u^2));
+    el = asin(x_u ./ sqrt(x_e.^2 + x_n.^2 + x_u.^2));
 
 end
