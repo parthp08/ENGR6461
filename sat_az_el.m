@@ -4,8 +4,8 @@
 %
 %%% references
 % -------------
-%[1] 'Global Positioning System: Theory and Applications'; edited by 
-%     Parkinson, Spilker, Axelrad, Enge; AIAA; 1996
+%[1] 'Global Positioning System: Signals, Measurements, and 
+%     Performance', Pratap Misra, Per Enge.
 %[2] 'Aerospace Navigation Systems'; edited by A.V.Nebylv, J.Watson
 %
 %%% inputs
