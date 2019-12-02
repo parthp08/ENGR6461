@@ -37,7 +37,7 @@ delta_r = [100;100;100];
 while norm(delta_r(1:3)) > 1e-5
 
     % Least Square Solution
-    delta_r = least_square_sol(P_sat_arr, Pu_0, pr);
+    [delta_r, ~] = least_square_sol(P_sat_arr, Pu_0, pr);
 
     % calulate user position and user clock bias
     Pu_0 = delta_r(1:3) + Pu_0;
@@ -99,7 +99,7 @@ pr_corrected = pr' + (c.*(delta_t_sv'))- bu_0 - I_e' - T_e';
 pr = pr_corrected';
 
 %%% Least Square Solution
-delta_r = least_square_sol(P_sat_arr, Pu_0, pr);
+[delta_r, DOP] = least_square_sol(P_sat_arr, Pu_0, pr);
 
 % user position and clock error % with errors considered
 Pu = delta_r(1:3) + Pu_0;
@@ -107,6 +107,25 @@ bu = delta_r(4);
 
 % user position in Longitude and Lattitude
 [lat, lon, h] = ECEF2WGS(Pu, 1);  % 1 = units in deg
+
+% DOP Matrix and its various forms
+DOP;
+GDOP = sqrt(DOP(1,1)+DOP(2,2)+DOP(3,3)+DOP(4,4)); % geometric DOP
+PDOP = sqrt(DOP(1,1)+DOP(2,2)+DOP(3,3)); % Position DOP
+HDOP = sqrt(DOP(1,1)+DOP(2,2)); % Horizontal DOP
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% printing variables for easiness
+disp("user position in ECEF frame");
+disp(Pu);
+disp("user position in Latitude and Longitude");
+disp([lat; lon]);
+disp("GDOP = ");
+disp(GDOP);
+disp("PDOP = ");
+disp(PDOP);
+disp("HDOP = ");
+disp(HDOP);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % plotting the user and satellites positions on ECEF frame
@@ -116,8 +135,15 @@ sat_pos_z = [P_a(3), P_b(3), P_c(3), P_d(3), P_e(3), P_f(3)];
 figure();
 earth_sphere('m'); % earth 3d map
 hold on;
-scatter3(sat_pos_x, sat_pos_y, sat_pos_z, 'o')
+scatter3(sat_pos_x, sat_pos_y, sat_pos_z, '*');
 scatter3(Pu(1), Pu(2), Pu(3), '*', 'w');
+text(sat_pos_x(1),sat_pos_y(1),sat_pos_z(1),"  sat a");
+text(sat_pos_x(2),sat_pos_y(2),sat_pos_z(2),"  sat b");
+text(sat_pos_x(3),sat_pos_y(3),sat_pos_z(3),"  sat c");
+text(sat_pos_x(4),sat_pos_y(4),sat_pos_z(4),"  sat d");
+text(sat_pos_x(5),sat_pos_y(5),sat_pos_z(5),"  sat e");
+text(sat_pos_x(6),sat_pos_y(6),sat_pos_z(6),"  sat f");
+text(Pu(1),Pu(2),Pu(3),"user");
 
 figure();
 geoscatter(lat,lon, '*', 'r'); % on 2D map

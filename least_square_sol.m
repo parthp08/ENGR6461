@@ -16,10 +16,11 @@
 %%% outputs
 %-----------
 % delta_r : array, size(4,1),[delta_x, delta_y, delta_z, c*delta_b], meters
+% DOP: array, size(4,4), DOP matrix
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function delta_r = least_square_sol(P_sat_arr, Pu_0, pr_arr_data)
+function [delta_r, DOP] = least_square_sol(P_sat_arr, Pu_0, pr_arr_data)
 
     % number of satellite
     n = size(P_sat_arr, 2); % 2 for size of columns
@@ -40,7 +41,8 @@ function delta_r = least_square_sol(P_sat_arr, Pu_0, pr_arr_data)
     end
     
     H_T = H';
-    H_terms = (inv(H_T*H))*(H_T);
+    DOP = inv(H_T*H);
+    H_terms = (DOP)*(H_T);
     
     delta_rho = (pr_arr_data)' - rho_0;
     
